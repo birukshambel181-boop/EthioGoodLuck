@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="am">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethio Good Luck Mini App</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #0f111a;
+            color: #ffffff;
+            padding-bottom: 70px;
+        }
+        .header {
+            padding: 20px;
+            background: #151823;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #222639;
+        }
+        .user-info h3 {
+            font-size: 18px;
+            color: #f5af19;
+        }
+        .user-info p {
+            font-size: 13px;
+            color: #8b92a5;
+        }
+        .container {
+            padding: 15px;
+        }
+        .balance-card {
+            background: linear-gradient(135deg, #f5af19, #f27121);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            color: #000;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(242, 113, 33, 0.3);
+        }
+        .balance-card h2 {
+            font-size: 32px;
+            margin: 10px 0;
+            font-weight: 800;
+        }
+        .balance-card p {
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .menu-item {
+            background: #1a1d2d;
+            padding: 20px;
+            border-radius: 14px;
+            text-align: center;
+            border: 1px solid #282c44;
+            transition: 0.2s;
+        }
+        .menu-item:active {
+            transform: scale(0.96);
+        }
+        .menu-item span {
+            font-size: 24px;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .menu-item h4 {
+            font-size: 15px;
+            color: #fff;
+        }
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #151823;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 1px solid #222639;
+        }
+        .nav-item {
+            text-align: center;
+            color: #8b92a5;
+            font-size: 11px;
+            text-decoration: none;
+        }
+        .nav-item.active {
+            color: #f5af19;
+        }
+        .nav-item span {
+            font-size: 18px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="user-info">
+            <h3 id="username">Welcome, User 👋</h3>
+            <p>@EthioGoodLuckBot</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Balance Section -->
+        <div class="balance-card">
+            <p>ጠቅላላ ቀሪ ሂሳብ / Wallet Balance</p>
+            <h2 id="balance">0.00 ETB</h2>
+            <p>Min Withdrawal: 2,500 ETB</p>
+        </div>
+
+        <!-- Menu Grid -->
+        <div class="menu-grid">
+            <div class="menu-item" onclick="alert('Earn section clicked')">
+                <span>⚡</span>
+                <h4>Earn</h4>
+            </div>
+            <div class="menu-item" onclick="alert('Watch Ads clicked')">
+                <span>📺</span>
+                <h4>Watch Ads</h4>
+            </div>
+            <div class="menu-item" onclick="alert('Referral clicked')">
+                <span>👥</span>
+                <h4>Invite</h4>
+            </div>
+            <div class="menu-item" onclick="alert('Withdraw clicked')">
+                <span>💳</span>
+                <h4>Withdraw</h4>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="nav-bar">
+        <a href="#" class="nav-item active">
+            <span>🏠</span>Home
+        </a>
+        <a href="#" class="nav-item">
+            <span>⚡</span>Earn
+        </a>
+        <a href="#" class="nav-item">
+            <span>📺</span>Ads
+        </a>
+        <a href="#" class="nav-item">
+            <span>👥</span>Invite
+        </a>
+        <a href="#" class="nav-item">
+            <span>💳</span>Withdraw
+        </a>
+    </div>
+
+</body>
+</html>
