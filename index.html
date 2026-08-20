@@ -105,9 +105,9 @@
             background-color: #2563eb;
             color: white;
         }
-        .btn-check {
-            background-color: #f59e0b;
-            color: #000;
+        .btn-claim {
+            background-color: #10b981;
+            color: white;
         }
         .btn-claimed {
             background-color: #475569;
@@ -296,7 +296,6 @@
         let balance = parseFloat(localStorage.getItem('user_balance')) || 0.00;
         updateBalanceDisplay();
 
-        // States for each task: 'join', 'check', 'claimed'
         for(let i = 1; i <= 3; i++) {
             let state = localStorage.getItem('task_state_' + i) || 'join';
             updateButtonUI(i, state);
@@ -321,14 +320,11 @@
             let currentState = localStorage.getItem('task_state_' + taskId) || 'join';
 
             if (currentState === 'join') {
-                // Open Telegram channel
                 window.open(channelUrl, '_blank');
-                // Change state to check
-                localStorage.setItem('task_state_' + taskId, 'check');
-                updateButtonUI(taskId, 'check');
+                localStorage.setItem('task_state_' + taskId, 'claim');
+                updateButtonUI(taskId, 'claim');
             } 
-            else if (currentState === 'check') {
-                // Simulate verification and reward
+            else if (currentState === 'claim') {
                 balance += 150;
                 localStorage.setItem('user_balance', balance);
                 localStorage.setItem('task_state_' + taskId, 'claimed');
@@ -345,9 +341,9 @@
             if (state === 'join') {
                 btn.innerText = 'Join Channel ' + taskId;
                 btn.className = 'btn btn-join';
-            } else if (state === 'check') {
-                btn.innerText = 'Check & Claim (+150 ETB)';
-                btn.className = 'btn btn-check';
+            } else if (state === 'claim') {
+                btn.innerText = 'Claim (+150 ETB)';
+                btn.className = 'btn btn-claim';
             } else if (state === 'claimed') {
                 btn.innerText = 'Claimed ✔';
                 btn.className = 'btn btn-claimed';
@@ -361,4 +357,3 @@
     </script>
 </body>
 </html>
-                    
