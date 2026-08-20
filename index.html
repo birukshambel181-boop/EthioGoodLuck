@@ -89,13 +89,9 @@
             color: #38bdf8;
             margin-top: 4px;
         }
-        .task-buttons {
-            display: flex;
-            gap: 10px;
-        }
         .btn {
-            flex: 1;
-            padding: 10px;
+            width: 100%;
+            padding: 12px;
             border: none;
             border-radius: 8px;
             font-weight: 600;
@@ -109,11 +105,11 @@
             background-color: #2563eb;
             color: white;
         }
-        .btn-claim {
-            background-color: #10b981;
-            color: white;
+        .btn-check {
+            background-color: #f59e0b;
+            color: #000;
         }
-        .btn-claim:disabled {
+        .btn-claimed {
             background-color: #475569;
             color: #94a3b8;
             cursor: not-allowed;
@@ -216,7 +212,7 @@
         <div id="earn" class="page-content">
             <div class="header">
                 <h1>Earn Free ETB ⚡</h1>
-                <p>Join channels to earn 150 ETB each!</p>
+                <p>Join channels and claim 150 ETB each!</p>
             </div>
 
             <!-- Task 1 -->
@@ -225,10 +221,7 @@
                     <h4>Channel 1</h4>
                     <p>+150.00 ETB</p>
                 </div>
-                <div class="task-buttons">
-                    <a href="https://t.me/THE_BEST_B_2025" target="_blank" class="btn btn-join">Join</a>
-                    <button class="btn btn-claim" id="claimBtn1" onclick="claimTask(1, 150)">Claim</button>
-                </div>
+                <button class="btn btn-join" id="taskBtn1" onclick="handleTask(1, 'https://t.me/THE_BEST_B_2025')">Join Channel 1</button>
             </div>
 
             <!-- Task 2 -->
@@ -237,10 +230,7 @@
                     <h4>Channel 2</h4>
                     <p>+150.00 ETB</p>
                 </div>
-                <div class="task-buttons">
-                    <a href="https://t.me/+wQ581JqY8p0wZGM0" target="_blank" class="btn btn-join">Join</a>
-                    <button class="btn btn-claim" id="claimBtn2" onclick="claimTask(2, 150)">Claim</button>
-                </div>
+                <button class="btn btn-join" id="taskBtn2" onclick="handleTask(2, 'https://t.me/+wQ581JqY8p0wZGM0')">Join Channel 2</button>
             </div>
 
             <!-- Task 3 -->
@@ -249,10 +239,7 @@
                     <h4>Channel 3</h4>
                     <p>+150.00 ETB</p>
                 </div>
-                <div class="task-buttons">
-                    <a href="https://t.me/biruk_shambel1" target="_blank" class="btn btn-join">Join</a>
-                    <button class="btn btn-claim" id="claimBtn3" onclick="claimTask(3, 150)">Claim</button>
-                </div>
+                <button class="btn btn-join" id="taskBtn3" onclick="handleTask(3, 'https://t.me/biruk_shambel1')">Join Channel 3</button>
             </div>
         </div>
 
@@ -309,6 +296,12 @@
         let balance = parseFloat(localStorage.getItem('user_balance')) || 0.00;
         updateBalanceDisplay();
 
+        // States for each task: 'join', 'check', 'claimed'
+        for(let i = 1; i <= 3; i++) {
+            let state = localStorage.getItem('task_state_' + i) || 'join';
+            updateButtonUI(i, state);
+        }
+
         function switchPage(pageId) {
             document.querySelectorAll('.page-content').forEach(page => {
                 page.classList.remove('active');
@@ -324,31 +317,42 @@
             }
         }
 
-        // Check if tasks were already claimed
-        for(let i = 1; i <= 3; i++) {
-            if(localStorage.getItem('task_' + i) === 'claimed') {
-                let btn = document.getElementById('claimBtn' + i);
-                if(btn) {
-                    btn.innerText = 'Claimed';
-                    btn.disabled = true;
-                }
+        function handleTask(taskId, channelUrl) {
+            let currentState = localStorage.getItem('task_state_' + taskId) || 'join';
+
+            if (currentState === 'join') {
+                // Open Telegram channel
+                window.open(channelUrl, '_blank');
+                // Change state to check
+                localStorage.setItem('task_state_' + taskId, 'check');
+                updateButtonUI(taskId, 'check');
+            } 
+            else if (currentState === 'check') {
+                // Simulate verification and reward
+                balance += 150;
+                localStorage.setItem('user_balance', balance);
+                localStorage.setItem('task_state_' + taskId, 'claimed');
+                updateButtonUI(taskId, 'claimed');
+                updateBalanceDisplay();
+                alert('Congratulations! 150.00 ETB added to your wallet.');
             }
         }
 
-        function claimTask(taskId, reward) {
-            if(localStorage.getItem('task_' + taskId) === 'claimed') return;
+        function updateButtonUI(taskId, state) {
+            let btn = document.getElementById('taskBtn' + taskId);
+            if (!btn) return;
 
-            balance += reward;
-            localStorage.setItem('user_balance', balance);
-            localStorage.setItem('task_' + taskId, 'claimed');
-
-            updateBalanceDisplay();
-
-            let btn = document.getElementById('claimBtn' + taskId);
-            btn.innerText = 'Claimed';
-            btn.disabled = true;
-
-            alert('Congratulations! ' + reward + ' ETB added to your wallet.');
+            if (state === 'join') {
+                btn.innerText = 'Join Channel ' + taskId;
+                btn.className = 'btn btn-join';
+            } else if (state === 'check') {
+                btn.innerText = 'Check & Claim (+150 ETB)';
+                btn.className = 'btn btn-check';
+            } else if (state === 'claimed') {
+                btn.innerText = 'Claimed ✔';
+                btn.className = 'btn btn-claimed';
+                btn.disabled = true;
+            }
         }
 
         function updateBalanceDisplay() {
@@ -357,4 +361,4 @@
     </script>
 </body>
 </html>
-
+                    
